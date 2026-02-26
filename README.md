@@ -1,4 +1,4 @@
-# 🚀 Smart Job Tracker
+# Smart Job Tracker
 
 A sleek, modern full-stack application built to systematically track job applications, manage professional skills, and prepare for interviews. Built with the MERN stack and styled with a minimal, SaaS-like aesthetic using Tailwind CSS.
 
@@ -7,15 +7,15 @@ A sleek, modern full-stack application built to systematically track job applica
 ![Node](https://img.shields.io/badge/Node-Express-green)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-brightgreen)
 
-## ✨ Features
+##  Features
 
-- 🔐 **Secure Authentication**: JWT-based login and registration system.
-- 📊 **Interactive Analytics Dashboard**: Visualizes your application funnel using visually appealing Recharts (Pie & Bar charts).
-- 📋 **Drag-and-Drop Kanban Board**: Seamlessly update job statuses using native HTML5 drag and drop across custom columns.
-- 📅 **Intelligent Date Tracking**: Precise tracking of application dates and conditionally rendered, highlighted interview dates.
-- 🏆 **Gamified Skill Roadmap**: Track your learning progress with dynamic mastery badges (Novice to Expert) and a one-click "+10%" quick level-up feature.
-- 🤖 **Context-Aware AI Guide Bot**: Animated, floating mock chatbot that provides context-aware assistance depending on the page you're viewing.
-- 📥 **CSV Export**: Extract and backup all your job hunting data with a single click.
+-  **Secure Authentication**: JWT-based login and registration system.
+-  **Interactive Analytics Dashboard**: Visualizes your application funnel using visually appealing Recharts (Pie & Bar charts).
+-  **Drag-and-Drop Kanban Board**: Seamlessly update job statuses using native HTML5 drag and drop across custom columns.
+-  **Intelligent Date Tracking**: Precise tracking of application dates and conditionally rendered, highlighted interview dates.
+-  **Gamified Skill Roadmap**: Track your learning progress with dynamic mastery badges (Novice to Expert) and a one-click "+10%" quick level-up feature.
+- **Context-Aware AI Guide Bot**: Animated, floating mock chatbot that provides context-aware assistance depending on the page you're viewing.
+-  **CSV Export**: Extract and backup all your job hunting data with a single click.
 
 ## 🛠️ Tech Stack
 
@@ -32,7 +32,7 @@ A sleek, modern full-stack application built to systematically track job applica
 - JSON Web Tokens (JWT)
 - bcryptjs (Password Hashing)
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Node.js (v16+)
@@ -64,10 +64,7 @@ A sleek, modern full-stack application built to systematically track job applica
 4. **Open Application:**
    Visit `http://localhost:5173` in your browser.
 
-## 📸 Screenshots
 
-*(To do: Add screenshots of the dashboard, kanban board, skills page, and App Guide Bot)*
-
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
