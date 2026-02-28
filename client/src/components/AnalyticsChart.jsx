@@ -31,16 +31,16 @@ const AnalyticsChart = ({ stats }) => {
 
     if (data.length === 0) {
         return (
-            <div className="h-64 flex items-center justify-center text-slate-400 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            <div className="h-64 flex items-center justify-center text-slate-400 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
                 Not enough data to generate chart. Add some applications!
             </div>
         );
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white dark:bg-slate-900/50 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 backdrop-blur-md">
             <div className="h-72 w-full">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Application Status</h3>
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4 text-center">Application Status</h3>
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
@@ -57,22 +57,37 @@ const AnalyticsChart = ({ stats }) => {
                             ))}
                         </Pie>
                         <Tooltip
-                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                            contentStyle={{
+                                borderRadius: '12px',
+                                border: 'none',
+                                boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+                                backgroundColor: 'var(--tooltip-bg)',
+                                color: 'var(--tooltip-color)'
+                            }}
+                            itemStyle={{ color: 'inherit' }}
                         />
-                        <Legend verticalAlign="bottom" height={36} />
+                        <Legend verticalAlign="bottom" height={36} iconType="circle" />
                     </PieChart>
                 </ResponsiveContainer>
             </div>
             <div className="h-72 w-full">
-                <h3 className="text-lg font-semibold text-slate-800 mb-4 text-center">Applications Overview</h3>
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-4 text-center">Applications Overview</h3>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                        <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                        <YAxis axisLine={false} tickLine={false} />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="text-slate-200 dark:text-slate-700" />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'currentColor' }} className="text-slate-500 dark:text-slate-400 text-xs" />
+                        <YAxis axisLine={false} tickLine={false} tick={{ fill: 'currentColor' }} className="text-slate-500 dark:text-slate-400 text-xs" />
                         <Tooltip
-                            cursor={{ fill: '#f8fafc' }}
-                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                            cursor={{ fill: 'currentColor', opacity: 0.1 }}
+                            className="text-slate-100 dark:text-slate-800"
+                            contentStyle={{
+                                borderRadius: '12px',
+                                border: 'none',
+                                boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+                                backgroundColor: 'var(--tooltip-bg)',
+                                color: 'var(--tooltip-color)'
+                            }}
+                            itemStyle={{ color: 'inherit' }}
                         />
                         <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                             {data.map((entry, index) => (

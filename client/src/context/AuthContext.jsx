@@ -16,15 +16,27 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const { data } = await api.post('/auth/login', { email, password });
-        localStorage.setItem('userInfo', JSON.stringify(data));
-        setUser(data);
-        return data;
+        try {
+            const res = await api.post('/auth/login', { email, password });
+            localStorage.setItem('user', JSON.stringify(res.data));
+            api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+            setUser(res.data);
+            return res.data;
+        } catch (error) {
+            console.error('Login error in AuthContext:', error);
+            throw error;
+        }
     };
 
     const register = async (name, email, password) => {
-        await api.post('/auth/register', { name, email, password });
-        // Removed auto-login logic to follow user's preferred flow
+        try {
+            const res = await api.post('/auth/register', { name, email, password });
+            // Don't auto-login here since they need to verify their email first!
+            return res.data;
+        } catch (error) {
+            console.error('Register error in AuthContext:', error);
+            throw error;
+        }
     };
 
     const logout = () => {

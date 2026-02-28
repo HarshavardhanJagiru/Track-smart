@@ -94,24 +94,24 @@ const Skills = () => {
 
     const getStatusClass = (status) => {
         switch (status) {
-            case 'Learnt': return 'bg-green-50 text-green-700 border-green-100';
-            case 'Learning': return 'bg-blue-50 text-blue-700 border-blue-100';
-            default: return 'bg-amber-50 text-amber-700 border-amber-100';
+            case 'Learnt': return 'bg-green-50 text-green-700 border-green-100 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800';
+            case 'Learning': return 'bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800';
+            default: return 'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800';
         }
     };
 
     const getProficiencyBadge = (level) => {
-        if (level < 25) return { label: 'Novice', color: 'bg-slate-100 text-slate-600' };
-        if (level < 50) return { label: 'Intermediate', color: 'bg-blue-100 text-blue-700' };
-        if (level < 75) return { label: 'Advanced', color: 'bg-purple-100 text-purple-700' };
-        return { label: 'Expert', color: 'bg-amber-100 text-amber-700 shadow-sm border border-amber-200' };
+        if (level < 25) return { label: 'Novice', color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400' };
+        if (level < 50) return { label: 'Intermediate', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300' };
+        if (level < 75) return { label: 'Advanced', color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300' };
+        return { label: 'Expert', color: 'bg-amber-100 text-amber-700 shadow-sm border border-amber-200 dark:bg-amber-900/40 dark:text-amber-300 dark:border-amber-800' };
     };
 
     return (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div className="space-y-1">
-                    <h1 className="text-4xl font-black bg-gradient-to-r from-primary-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
+                    <h1 className="text-4xl font-black bg-gradient-to-r from-primary-600 via-emerald-500 to-teal-600 bg-clip-text text-transparent flex items-center gap-3">
                         Skill Roadmap <Sparkles className="text-primary-500 animate-pulse" size={32} />
                     </h1>
                     <p className="text-slate-500 font-medium font-outfit uppercase tracking-widest text-xs">Bridge the gap with visual milestones</p>
@@ -147,15 +147,15 @@ const Skills = () => {
                                     {skill.status}
                                 </div>
                                 <div className="flex gap-2">
-                                    <button onClick={() => openEditModal(skill)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">
+                                    <button onClick={() => openEditModal(skill)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl transition-all">
                                         <Edit2 size={18} />
                                     </button>
-                                    <button onClick={() => handleDelete(skill._id)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all">
+                                    <button onClick={() => handleDelete(skill._id)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl transition-all">
                                         <Trash2 size={18} />
                                     </button>
                                 </div>
                             </div>
-                            <h3 className="text-2xl font-black text-slate-900 mb-2 truncate group-hover:text-primary-600 transition-colors tracking-tight">{skill.name}</h3>
+                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-2 truncate group-hover:text-primary-600 transition-colors tracking-tight">{skill.name}</h3>
                             <div className="space-y-6">
                                 <div>
                                     <div className="flex justify-between items-end mb-2">
@@ -166,11 +166,11 @@ const Skills = () => {
                                             </span>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <span className="text-primary-600 font-bold">{skill.proficiency}%</span>
+                                            <span className="text-primary-600 dark:text-primary-400 font-bold">{skill.proficiency}%</span>
                                             {skill.proficiency < 100 && (
                                                 <button
                                                     onClick={() => handleLevelUp(skill)}
-                                                    className="px-2 py-1 text-[10px] font-bold bg-primary-50 text-primary-700 rounded hover:bg-primary-100 transition-colors"
+                                                    className="px-2 py-1 text-[10px] font-bold bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors"
                                                     title="Quick Level Up (+10%)"
                                                 >
                                                     +10%
@@ -178,7 +178,7 @@ const Skills = () => {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden p-0.5 mt-2">
+                                    <div className="h-3 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden p-0.5 mt-2">
                                         <div
                                             className={`h-full rounded-full transition-all duration-1000 ease-out relative ${skill.status === 'Learnt' ? 'bg-gradient-to-r from-green-400 to-green-600' : 'bg-gradient-to-r from-primary-400 to-primary-600'
                                                 }`}
@@ -201,12 +201,12 @@ const Skills = () => {
                     ))}
                 </div>
             ) : (
-                <div className="card text-center py-24 bg-white/50 border-dashed border-2 animate-in zoom-in duration-700">
-                    <div className="mx-auto w-20 h-20 bg-white rounded-3xl shadow-xl flex items-center justify-center text-slate-300 mb-6 group-hover:rotate-12 transition-transform">
-                        <BookOpen size={40} className="text-primary-200" />
+                <div className="card text-center py-24 bg-white/50 dark:bg-slate-900/50 border-dashed border-2 dark:border-slate-800 animate-in zoom-in duration-700">
+                    <div className="mx-auto w-20 h-20 bg-white dark:bg-slate-800 rounded-3xl shadow-xl flex items-center justify-center text-slate-300 mb-6 group-hover:rotate-12 transition-transform">
+                        <BookOpen size={40} className="text-primary-200 dark:text-primary-800" />
                     </div>
-                    <h3 className="text-2xl font-black text-slate-900 mb-2">No milestones explored</h3>
-                    <p className="text-slate-500 max-w-sm mx-auto mb-8 font-medium">Start documenting the skills you're learning or planning to master for your dream role.</p>
+                    <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-2">No milestones explored</h3>
+                    <p className="text-slate-500 dark:text-slate-400 max-w-sm mx-auto mb-8 font-medium">Start documenting the skills you're learning or planning to master for your dream role.</p>
                     <button onClick={() => setIsModalOpen(true)} className="btn btn-primary px-10 py-4 shadow-xl shadow-primary-500/20">
                         Add Your First Skill
                     </button>
@@ -215,27 +215,27 @@ const Skills = () => {
 
             {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 animate-in zoom-in duration-300">
-                        <h2 className="text-xl font-bold text-slate-900 mb-4">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 dark:bg-black/70 backdrop-blur-sm">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md p-6 animate-in zoom-in duration-300 border border-slate-100 dark:border-slate-800">
+                        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
                             {editingSkill ? 'Edit Skill' : 'Add New Skill'}
                         </h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1">Skill Name</label>
+                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Skill Name</label>
                                 <input
                                     type="text"
                                     required
-                                    className="input w-full"
+                                    className="input w-full bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
                                     placeholder="e.g. React, Python, AWS"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1">Status</label>
+                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Status</label>
                                 <select
-                                    className="input w-full"
+                                    className="input w-full bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
                                     value={formData.status}
                                     onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                                 >
@@ -245,22 +245,22 @@ const Skills = () => {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1">
+                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
                                     Proficiency ({formData.proficiency}%)
                                 </label>
                                 <input
                                     type="range"
                                     min="0"
                                     max="100"
-                                    className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                                    className="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary-600"
                                     value={formData.proficiency}
                                     onChange={(e) => setFormData({ ...formData, proficiency: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1">Notes (Optional)</label>
+                                <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">Notes (Optional)</label>
                                 <textarea
-                                    className="input w-full h-24 resize-none"
+                                    className="input w-full h-24 resize-none bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
                                     placeholder="Resources, goals, or small progress updates..."
                                     value={formData.notes}
                                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}

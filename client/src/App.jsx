@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
@@ -8,16 +8,32 @@ import Dashboard from './pages/Dashboard';
 import Skills from './pages/Skills';
 import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
+import Landing from './pages/Landing';
 import AppGuideBot from './components/AppGuideBot';
+
+const AppLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      <AppGuideBot />
+    </>
+  );
+};
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-slate-50">
-          <Navbar />
-          <main>
-            <Routes>
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 relative">
+          <Routes>
+            {/* Public Root Route (No Navbar) */}
+            <Route path="/" element={<Landing />} />
+
+            {/* Application Routes Wrap with Navbar */}
+            <Route element={<AppLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
@@ -26,8 +42,6 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/skills" element={<Skills />} />
                 <Route path="/profile" element={<Profile />} />
-
-                {/* Embed bot inside ProtectedRoute so it only shows when logged in, but we have to handle it differently since it isn't a page */}
               </Route>
 
               {/* Admin Routes */}
@@ -35,11 +49,10 @@ function App() {
                 <Route path="/admin" element={<AdminDashboard />} />
               </Route>
 
-              {/* Redirects */}
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            </Routes>
-            <AppGuideBot />
-          </main>
+              {/* Redirects within App Layout */}
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Route>
+          </Routes>
         </div>
       </Router>
     </AuthProvider>

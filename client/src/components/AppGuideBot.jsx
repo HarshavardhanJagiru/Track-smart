@@ -66,9 +66,9 @@ const AppGuideBot = () => {
         <div className="fixed bottom-6 right-6 z-50">
             {/* Chat Window */}
             {isOpen && (
-                <div className="absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col h-[500px] max-h-[70vh] animate-in slide-in-from-bottom-5 duration-300">
+                <div className="absolute bottom-16 right-0 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col h-[500px] max-h-[70vh] animate-in slide-in-from-bottom-5 duration-300">
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-primary-600 to-indigo-600 p-4 flex items-center justify-between text-white">
+                    <div className="bg-gradient-to-r from-primary-500 to-teal-600 p-4 flex items-center justify-between text-white">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
                                 <Bot size={20} />
@@ -87,12 +87,12 @@ const AppGuideBot = () => {
                     </div>
 
                     {/* Messages Area */}
-                    <div className="flex-1 bg-slate-50 p-4 overflow-y-auto space-y-4">
+                    <div className="flex-1 bg-slate-50 dark:bg-slate-950 p-4 overflow-y-auto space-y-4">
                         {messages.map((msg, idx) => (
                             <div key={idx} className={`flex ${msg.isBot ? 'justify-start' : 'justify-end'}`}>
                                 <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.isBot
-                                        ? 'bg-white border border-slate-100 text-slate-700 rounded-tl-none shadow-sm'
-                                        : 'bg-primary-600 text-white rounded-tr-none shadow-md'
+                                    ? 'bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-tl-none shadow-sm'
+                                    : 'bg-primary-600 text-white rounded-tr-none shadow-md'
                                     }`}>
                                     {msg.text}
                                 </div>
@@ -100,10 +100,10 @@ const AppGuideBot = () => {
                         ))}
                         {isTyping && (
                             <div className="flex justify-start">
-                                <div className="bg-white border border-slate-100 p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1">
-                                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                                <div className="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1">
+                                    <div className="w-2 h-2 bg-slate-400 dark:bg-slate-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                                    <div className="w-2 h-2 bg-slate-400 dark:bg-slate-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                                    <div className="w-2 h-2 bg-slate-400 dark:bg-slate-500 rounded-full animate-bounce"></div>
                                 </div>
                             </div>
                         )}
@@ -111,14 +111,14 @@ const AppGuideBot = () => {
                     </div>
 
                     {/* Input Area */}
-                    <div className="p-3 bg-white border-t border-slate-100">
+                    <div className="p-3 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
                         <form onSubmit={handleSend} className="flex gap-2">
                             <input
                                 type="text"
                                 value={inputText}
                                 onChange={(e) => setInputText(e.target.value)}
                                 placeholder="Ask me anything..."
-                                className="flex-1 input h-10 text-sm !rounded-full"
+                                className="flex-1 input h-10 text-sm !rounded-full bg-slate-50 dark:bg-slate-800 dark:border-slate-700 dark:text-white"
                             />
                             <button
                                 type="submit"
@@ -136,8 +136,8 @@ const AppGuideBot = () => {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 active:scale-95 ${isOpen
-                        ? 'bg-white text-slate-500 scale-90 shadow-md'
-                        : 'bg-gradient-to-r from-primary-600 to-indigo-600 text-white animate-bounce shadow-primary-500/30'
+                    ? 'bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 scale-90 shadow-md'
+                    : 'bg-gradient-to-r from-primary-500 to-teal-600 text-white animate-bounce shadow-primary-500/30'
                     }`}
             >
                 {isOpen ? <X size={24} /> : <MessageSquare size={24} />}

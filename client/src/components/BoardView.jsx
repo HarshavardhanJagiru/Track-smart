@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import JobCard from './JobCard';
 
 const BOARD_COLUMNS = [
-    { id: 'Applied', title: 'Applied', bgColor: 'bg-blue-50', borderColor: 'border-blue-200', textColor: 'text-blue-700' },
-    { id: 'Interview', title: 'Interviewing', bgColor: 'bg-orange-50', borderColor: 'border-orange-200', textColor: 'text-orange-700' },
-    { id: 'Offer', title: 'Offers', bgColor: 'bg-green-50', borderColor: 'border-green-200', textColor: 'text-green-700' },
-    { id: 'Rejected', title: 'Rejected', bgColor: 'bg-red-50', borderColor: 'border-red-200', textColor: 'text-red-700' },
+    { id: 'Applied', title: 'Applied', bgColor: 'bg-blue-50 dark:bg-blue-900/10', borderColor: 'border-blue-200 dark:border-blue-900/30', textColor: 'text-blue-700 dark:text-blue-400' },
+    { id: 'Interview', title: 'Interviewing', bgColor: 'bg-orange-50 dark:bg-orange-900/10', borderColor: 'border-orange-200 dark:border-orange-900/30', textColor: 'text-orange-700 dark:text-orange-400' },
+    { id: 'Offer', title: 'Offers', bgColor: 'bg-green-50 dark:bg-green-900/10', borderColor: 'border-green-200 dark:border-green-900/30', textColor: 'text-green-700 dark:text-green-400' },
+    { id: 'Rejected', title: 'Rejected', bgColor: 'bg-red-50 dark:bg-red-900/10', borderColor: 'border-red-200 dark:border-red-900/30', textColor: 'text-red-700 dark:text-red-400' },
 ];
 
 const BoardView = ({ jobs, onEdit, onDelete, onStatusChange }) => {
@@ -56,7 +56,7 @@ const BoardView = ({ jobs, onEdit, onDelete, onStatusChange }) => {
                         onDragLeave={handleDragLeave}
                         onDrop={(e) => handleDrop(e, column.id)}
                     >
-                        <div className="p-4 border-b border-inherit bg-white/50 rounded-t-2xl">
+                        <div className="p-4 border-b border-inherit bg-white/50 dark:bg-slate-900/50 rounded-t-2xl">
                             <div className="flex items-center justify-between">
                                 <h3 className={`font-bold ${column.textColor}`}>
                                     {column.title}
@@ -67,7 +67,7 @@ const BoardView = ({ jobs, onEdit, onDelete, onStatusChange }) => {
                             </div>
                         </div>
 
-                        <div className={`p-4 flex-1 overflow-y-auto space-y-4 rounded-b-2xl transition-colors ${isActive ? 'bg-white/40' : ''}`}>
+                        <div className={`p-4 flex-1 overflow-y-auto space-y-4 rounded-b-2xl transition-colors ${isActive ? 'bg-white/40 dark:bg-slate-800/40' : ''}`}>
                             {columnJobs.length > 0 ? (
                                 columnJobs.map((job) => (
                                     <div
@@ -82,7 +82,7 @@ const BoardView = ({ jobs, onEdit, onDelete, onStatusChange }) => {
                                 ))
                             ) : (
                                 <div className="h-full flex flex-col items-center justify-center text-center p-4 border-2 border-dashed border-inherit rounded-xl opacity-60">
-                                    <p className="text-sm font-medium">No jobs in {column.title.toLowerCase()}</p>
+                                    <p className="text-sm font-medium dark:text-slate-400">No jobs in {column.title.toLowerCase()}</p>
                                 </div>
                             )}
                         </div>

@@ -32,13 +32,13 @@ const Register = () => {
         <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4 animate-in fade-in zoom-in duration-700">
             <div className="max-w-md w-full">
                 <div className="text-center mb-10 group">
-                    <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-primary-600 to-indigo-700 rounded-3xl text-white mb-6 shadow-2xl shadow-primary-500/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500 animate-float">
+                    <div className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-primary-500 to-teal-700 rounded-3xl text-white mb-6 shadow-2xl shadow-primary-500/30 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500 animate-float">
                         <Briefcase size={40} />
                     </div>
-                    <h1 className="text-4xl font-black bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-2">
+                    <h1 className="text-4xl font-black bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent mb-2">
                         Join the Elite
                     </h1>
-                    <p className="text-slate-500 font-semibold tracking-wide uppercase text-xs">Start your accelerated career journey today</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-semibold tracking-wide uppercase text-xs">Start your accelerated career journey today</p>
                 </div>
 
                 <div className="card shadow-xl shadow-slate-200/50">
@@ -59,7 +59,7 @@ const Register = () => {
                                     type="text"
                                     required
                                     className="input !pl-14"
-                                    placeholder="John Doe"
+                                    placeholder="Krishna Kumar"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
@@ -118,9 +118,9 @@ const Register = () => {
                         </button>
                     </form>
 
-                    <p className="text-center mt-8 text-slate-600 font-medium">
+                    <p className="text-center mt-8 text-slate-600 dark:text-slate-400 font-medium">
                         Already have an account?{' '}
-                        <Link to="/login" className="text-primary-600 hover:text-primary-700 font-bold">
+                        <Link to="/login" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 font-bold">
                             Log In
                         </Link>
                     </p>

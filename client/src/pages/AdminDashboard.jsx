@@ -54,10 +54,10 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                 <div className="space-y-1">
-                    <h1 className="text-4xl font-black bg-gradient-to-r from-primary-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent flex items-center gap-3">
+                    <h1 className="text-4xl font-black bg-gradient-to-r from-primary-600 via-emerald-500 to-teal-600 bg-clip-text text-transparent flex items-center gap-3">
                         Admin Command Center <ShieldCheck className="text-primary-500 animate-pulse" size={32} />
                     </h1>
-                    <p className="text-slate-500 font-bold uppercase tracking-widest text-xs">Total Registered Users: {users.length}</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest text-xs">Total Registered Users: {users.length}</p>
                 </div>
 
                 <div className="relative w-full md:w-80 group">
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
                     <input
                         type="text"
                         placeholder="Search users..."
-                        className="input !pl-12 h-12 shadow-sm"
+                        className="input !pl-12 h-12 shadow-sm bg-white dark:bg-slate-800 dark:text-white dark:border-slate-700"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -77,21 +77,21 @@ const AdminDashboard = () => {
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-32 grayscale opacity-50">
                     <Loader2 className="animate-spin text-primary-600 mb-4" size={50} />
-                    <p className="font-bold text-slate-400 tracking-wider uppercase text-sm">Accessing Member Registry...</p>
+                    <p className="font-bold text-slate-400 dark:text-slate-500 tracking-wider uppercase text-sm">Accessing Member Registry...</p>
                 </div>
             ) : (
-                <div className="card overflow-hidden !p-0 border-white/20 shadow-2xl">
+                <div className="card overflow-hidden !p-0 border-white/20 dark:border-slate-800 shadow-2xl dark:bg-slate-900/50">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-slate-50/50 backdrop-blur-md border-b border-slate-100">
+                                <tr className="bg-slate-50/50 dark:bg-slate-800/50 backdrop-blur-md border-b border-slate-100 dark:border-slate-700">
                                     <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Member</th>
                                     <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Email Address</th>
                                     <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Joined Date</th>
                                     <th className="px-6 py-5 text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Role</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-100/50 bg-white/40">
+                            <tbody className="divide-y divide-slate-100/50 dark:divide-slate-800/50 bg-white/40 dark:bg-transparent">
                                 {filteredUsers.map((u, index) => (
                                     <tr
                                         key={u._id}
@@ -100,15 +100,15 @@ const AdminDashboard = () => {
                                     >
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center text-primary-700 font-black border border-primary-200 shadow-sm text-lg">
+                                                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/30 dark:to-primary-800/30 flex items-center justify-center text-primary-700 dark:text-primary-400 font-black border border-primary-200 dark:border-primary-900/50 shadow-sm text-lg">
                                                     {u.name.charAt(0).toUpperCase()}
                                                 </div>
-                                                <span className="font-bold text-slate-900 text-base">{u.name}</span>
+                                                <span className="font-bold text-slate-900 dark:text-white text-base">{u.name}</span>
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className="flex items-center gap-2 text-slate-600 font-medium">
-                                                <Mail size={16} className="text-slate-300" />
+                                            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300 font-medium">
+                                                <Mail size={16} className="text-slate-300 dark:text-slate-500" />
                                                 {u.email}
                                             </div>
                                         </td>

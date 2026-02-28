@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import StatsCard from '../components/StatsCard';
@@ -61,9 +62,11 @@ const Dashboard = () => {
     const handleAddJob = async (formData) => {
         try {
             await api.post('/jobs', formData);
+            toast.success('Job application added successfully!');
             setIsModalOpen(false);
             fetchData();
         } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to add job application');
             console.error('Error adding job:', error);
         }
     };
@@ -71,10 +74,12 @@ const Dashboard = () => {
     const handleUpdateJob = async (formData) => {
         try {
             await api.put(`/jobs/${editingJob._id}`, formData);
+            toast.success('Job application updated!');
             setIsModalOpen(false);
             setEditingJob(null);
             fetchData();
         } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to update job application');
             console.error('Error updating job:', error);
         }
     };
@@ -85,6 +90,7 @@ const Dashboard = () => {
 
         try {
             await api.put(`/jobs/${jobId}`, { status: newStatus });
+            toast.success(`Status updated to ${newStatus}`);
 
             // Refresh stats silently without showing loader
             const [statsRes, skillsRes] = await Promise.all([
@@ -99,6 +105,7 @@ const Dashboard = () => {
                 total: skills.length
             });
         } catch (error) {
+            toast.error('Failed to update status');
             console.error('Error updating job status:', error);
             setJobs(originalJobs); // Revert optimistic update
         }
@@ -108,8 +115,10 @@ const Dashboard = () => {
         if (window.confirm('Are you sure you want to delete this job application?')) {
             try {
                 await api.delete(`/jobs/${id}`);
+                toast.success('Job application deleted');
                 fetchData();
             } catch (error) {
+                toast.error('Failed to delete job application');
                 console.error('Error deleting job:', error);
             }
         }
@@ -159,15 +168,15 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
                 <div className="animate-in slide-in-from-left duration-700">
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
                         Welcome back, {user?.name}! 👋
                     </h1>
-                    <p className="text-slate-500 font-medium">Here's an overview of your job search progress.</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium">Here's an overview of your job search progress.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <button
                         onClick={exportToCSV}
-                        className="btn bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-2 px-4 py-3 shadow-sm transition-all"
+                        className="btn bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center justify-center gap-2 px-4 py-3 shadow-sm transition-all"
                         title="Export to CSV"
                     >
                         <Download size={20} />
@@ -205,29 +214,68 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Analytics Section */}
+            {/* Analytics & Upcoming Section */}
             {!loading && jobs.length > 0 && (
-                <div className="mb-12 animate-in slide-in-from-bottom-8 duration-700 delay-150">
-                    <AnalyticsChart stats={stats} />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 animate-in slide-in-from-bottom-8 duration-700 delay-150">
+                    <div className="lg:col-span-2">
+                        <AnalyticsChart stats={stats} />
+                    </div>
+                    <div className="card bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border-primary-100 dark:border-slate-800">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <Clock className="text-primary-600" size={20} />
+                                Upcoming Interviews
+                            </h3>
+                            <span className="bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 text-xs font-bold px-2 py-1 rounded-full">
+                                {jobs.filter(j => j.status === 'Interview' && new Date(j.interviewDate) >= new Date()).length}
+                            </span>
+                        </div>
+                        <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                            {jobs
+                                .filter(j => j.status === 'Interview' && new Date(j.interviewDate) >= new Date())
+                                .sort((a, b) => new Date(a.interviewDate) - new Date(b.interviewDate))
+                                .map((job) => (
+                                    <div key={job._id} className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:border-primary-200 transition-all group">
+                                        <div className="flex justify-between items-start mb-1">
+                                            <h4 className="font-bold text-slate-900 dark:text-white truncate group-hover:text-primary-600 transition-colors">{job.company}</h4>
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{new Date(job.interviewDate).toLocaleDateString()}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400 truncate mb-2">{job.position}</p>
+                                        <div className="flex items-center gap-1.5 text-[10px] font-medium text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 w-fit px-2 py-0.5 rounded-full">
+                                            <Clock size={10} />
+                                            {new Date(job.interviewDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </div>
+                                    </div>
+                                ))}
+                            {jobs.filter(j => j.status === 'Interview' && new Date(j.interviewDate) >= new Date()).length === 0 && (
+                                <div className="text-center py-10">
+                                    <div className="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-300">
+                                        <Clock size={24} />
+                                    </div>
+                                    <p className="text-sm text-slate-400">No interviews scheduled soon.</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
 
             {/* Main Content */}
             <div className="space-y-6">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/70 dark:bg-slate-900/70 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 backdrop-blur-md">
                     <div className="flex items-center gap-4 w-full md:w-auto">
-                        <h2 className="text-xl font-bold text-slate-900 whitespace-nowrap">Your Applications</h2>
-                        <div className="flex bg-slate-100 p-1 rounded-lg">
+                        <h2 className="text-xl font-bold text-slate-900 dark:text-white whitespace-nowrap">Your Applications</h2>
+                        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-full">
                             <button
                                 onClick={() => setViewMode('grid')}
-                                className={`p-1.5 rounded-md flex items-center justify-center transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-primary-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                className={`p-1.5 rounded-full flex items-center justify-center transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-primary-600' : 'text-slate-500 hover:text-slate-700'}`}
                                 title="Grid View"
                             >
                                 <List size={18} />
                             </button>
                             <button
                                 onClick={() => setViewMode('board')}
-                                className={`p-1.5 rounded-md flex items-center justify-center transition-all ${viewMode === 'board' ? 'bg-white shadow-sm text-primary-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                className={`p-1.5 rounded-full flex items-center justify-center transition-all ${viewMode === 'board' ? 'bg-white shadow-sm text-primary-600' : 'text-slate-500 hover:text-slate-700'}`}
                                 title="Board View"
                             >
                                 <Kanban size={18} />
@@ -241,7 +289,7 @@ const Dashboard = () => {
                         <input
                             type="text"
                             placeholder="Search companies or roles..."
-                            className="input !pl-12 h-10"
+                            className="input !pl-12 h-10 bg-white dark:bg-slate-800 dark:text-white dark:border-slate-700"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -271,14 +319,14 @@ const Dashboard = () => {
                         </div>
                     )
                 ) : (
-                    <div className="card text-center py-20 bg-slate-50 border-dashed border-2">
-                        <div className="mx-auto w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-slate-300 mb-4">
+                    <div className="card text-center py-20 bg-slate-50 dark:bg-slate-900/50 border-dashed border-2 dark:border-slate-800">
+                        <div className="mx-auto w-16 h-16 bg-white dark:bg-slate-800 rounded-full shadow-sm flex items-center justify-center text-slate-300 dark:text-slate-600 mb-4">
                             <Briefcase size={32} />
                         </div>
-                        <h3 className="text-lg font-bold text-slate-900 mb-1">
+                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">
                             {searchTerm ? 'No matches found' : 'No job applications yet'}
                         </h3>
-                        <p className="text-slate-500 max-w-xs mx-auto mb-6">
+                        <p className="text-slate-500 dark:text-slate-400 max-w-xs mx-auto mb-6">
                             {searchTerm
                                 ? "Try adjusting your search terms to find what you're looking for."
                                 : "Your job search dashboard is empty. Start by adding your first application!"}
