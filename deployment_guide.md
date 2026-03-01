@@ -20,7 +20,8 @@ Follow these steps to put your application on the internet using **Render** (fre
 3.  Connect your `Track-smart` repository.
 4.  Configure the service:
     - **Name**: `smart-job-tracker`
-    - **Run Command**: `npm start` (This will use the root `package.json` we updated).
+    - **Build Command**: `npm run build`
+    - **Start Command**: `npm start`
     - **Environment Variables**: Add these in the "Environment" tab:
         - `NODE_ENV`: `production`
         - `MONGO_URI`: (Your MongoDB Atlas string from Step 2)
