@@ -87,7 +87,6 @@ const Profile = () => {
                 <div className="space-y-8">
                     <div className="card border-red-100 dark:border-red-900/50 bg-red-50/30 dark:bg-red-950/20 !p-8 shadow-red-500/5 transition-all hover:shadow-red-500/10">
                         <div className="flex items-center gap-3 text-red-600 dark:text-red-400 mb-6">
-                            <ShieldAlert size={28} />
                             <h2 className="text-xl font-black uppercase tracking-tighter">Danger Zone</h2>
                         </div>
                         <p className="text-sm text-slate-600 dark:text-slate-400 font-medium mb-8 leading-relaxed">

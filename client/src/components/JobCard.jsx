@@ -2,6 +2,7 @@ import { Edit2, Trash2, MapPin, Calendar } from 'lucide-react';
 
 const JobCard = ({ job, onEdit, onDelete, compact = false }) => {
     const statusStyles = {
+        'Yet to Apply': 'bg-indigo-50 text-indigo-700 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-400 dark:border-indigo-800',
         Applied: 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800',
         Interview: 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-400 dark:border-orange-800',
         Offer: 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800',
@@ -53,6 +54,15 @@ const JobCard = ({ job, onEdit, onDelete, compact = false }) => {
                             <Calendar size={14} />
                         </div>
                         Interview: {formatDate(job.interviewDate)}
+                    </div>
+                )}
+
+                {job.status === 'Yet to Apply' && job.deadline && (
+                    <div className="flex items-center gap-3 text-sm font-bold text-indigo-700 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/30 p-2 rounded-lg animate-in fade-in zoom-in-95 duration-300">
+                        <div className="p-1.5 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg text-indigo-600 dark:text-indigo-400">
+                            <Calendar size={14} />
+                        </div>
+                        Deadline: {formatDate(job.deadline)}
                     </div>
                 )}
             </div>

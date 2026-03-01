@@ -10,6 +10,7 @@ const JobFormModal = ({ isOpen, onClose, onSubmit, editingJob = null }) => {
         notes: '',
         appliedDate: new Date().toISOString().split('T')[0],
         interviewDate: '',
+        deadline: '',
     });
 
     useEffect(() => {
@@ -26,6 +27,9 @@ const JobFormModal = ({ isOpen, onClose, onSubmit, editingJob = null }) => {
                 interviewDate: editingJob.interviewDate
                     ? new Date(editingJob.interviewDate).toISOString().split('T')[0]
                     : '',
+                deadline: editingJob.deadline
+                    ? new Date(editingJob.deadline).toISOString().split('T')[0]
+                    : '',
             });
         } else {
             setFormData({
@@ -36,6 +40,7 @@ const JobFormModal = ({ isOpen, onClose, onSubmit, editingJob = null }) => {
                 notes: '',
                 appliedDate: new Date().toISOString().split('T')[0],
                 interviewDate: '',
+                deadline: '',
             });
         }
     }, [editingJob, isOpen]);
@@ -114,6 +119,7 @@ const JobFormModal = ({ isOpen, onClose, onSubmit, editingJob = null }) => {
                                 value={formData.status}
                                 onChange={handleChange}
                             >
+                                <option value="Yet to Apply">Yet to Apply</option>
                                 <option value="Applied">Applied</option>
                                 <option value="Interview">Interview</option>
                                 <option value="Offer">Offer</option>
@@ -156,6 +162,20 @@ const JobFormModal = ({ isOpen, onClose, onSubmit, editingJob = null }) => {
                                 required
                                 className="input w-full border-orange-200 focus:ring-orange-500/20 focus:border-orange-500"
                                 value={formData.interviewDate}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    )}
+
+                    {formData.status === 'Yet to Apply' && (
+                        <div className="space-y-1.5 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <label className="text-sm font-semibold text-slate-700">Application Deadline</label>
+                            <input
+                                type="date"
+                                name="deadline"
+                                required
+                                className="input w-full border-blue-200 focus:ring-blue-500/20 focus:border-blue-500"
+                                value={formData.deadline}
                                 onChange={handleChange}
                             />
                         </div>

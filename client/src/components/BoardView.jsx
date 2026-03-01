@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import JobCard from './JobCard';
 
 const BOARD_COLUMNS = [
+    { id: 'Yet to Apply', title: 'Yet to Apply', bgColor: 'bg-indigo-50 dark:bg-indigo-900/10', borderColor: 'border-indigo-200 dark:border-indigo-900/30', textColor: 'text-indigo-700 dark:text-indigo-400' },
     { id: 'Applied', title: 'Applied', bgColor: 'bg-blue-50 dark:bg-blue-900/10', borderColor: 'border-blue-200 dark:border-blue-900/30', textColor: 'text-blue-700 dark:text-blue-400' },
     { id: 'Interview', title: 'Interviewing', bgColor: 'bg-orange-50 dark:bg-orange-900/10', borderColor: 'border-orange-200 dark:border-orange-900/30', textColor: 'text-orange-700 dark:text-orange-400' },
     { id: 'Offer', title: 'Offers', bgColor: 'bg-green-50 dark:bg-green-900/10', borderColor: 'border-green-200 dark:border-green-900/30', textColor: 'text-green-700 dark:text-green-400' },

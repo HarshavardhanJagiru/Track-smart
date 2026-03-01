@@ -13,6 +13,7 @@ const Dashboard = () => {
     const [jobs, setJobs] = useState([]);
     const [stats, setStats] = useState({
         total: 0,
+        yetToApply: 0,
         applied: 0,
         interview: 0,
         offer: 0,
@@ -193,9 +194,12 @@ const Dashboard = () => {
             </div>
 
             {/* Stats Summary */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-6 mb-12">
                 <div className="hover:scale-105 transition-transform duration-300">
                     <StatsCard label="Total Jobs" count={stats.total} icon={Briefcase} color="slate" />
+                </div>
+                <div className="hover:scale-105 transition-transform duration-300">
+                    <StatsCard label="Yet to Apply" count={stats.yetToApply} icon={Briefcase} color="indigo" />
                 </div>
                 <div className="hover:scale-105 transition-transform duration-300">
                     <StatsCard label="Applied" count={stats.applied} icon={Briefcase} color="blue" />

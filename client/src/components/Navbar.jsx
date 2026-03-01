@@ -43,7 +43,7 @@ const Navbar = () => {
                                     >
                                         Account
                                     </Link>
-                                    {user.isAdmin && (
+                                    {user?.isAdmin && (
                                         <Link
                                             to="/admin"
                                             className="px-5 py-2 rounded-full text-sm font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 transition-all hover:bg-white dark:hover:bg-slate-900 border border-primary-100 dark:border-primary-900/30"

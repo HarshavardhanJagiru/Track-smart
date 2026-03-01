@@ -37,6 +37,30 @@ const AdminDashboard = () => {
         }
     };
 
+    const handlePromoteUser = async (userToPromote) => {
+        if (!window.confirm(`Are you sure you want to promote ${userToPromote.name} to Administrator?`)) return;
+
+        try {
+            await api.put(`/auth/${userToPromote._id}/role`);
+            setUsers(users.map(u => u._id === userToPromote._id ? { ...u, isAdmin: true } : u));
+        } catch (error) {
+            console.error('Error promoting user:', error);
+            alert('Failed to promote user.');
+        }
+    };
+
+    const handleDemoteUser = async (userToDemote) => {
+        if (!window.confirm(`Are you sure you want to demote ${userToDemote.name} from Administrator?.`)) return;
+
+        try {
+            await api.put(`/auth/${userToDemote._id}/role`);
+            setUsers(users.map(u => u._id === userToDemote._id ? { ...u, isAdmin: false } : u));
+        } catch (error) {
+            console.error('Error demoting user:', error);
+            alert('Failed to demote user.');
+        }
+    };
+
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             month: 'long',
@@ -127,13 +151,33 @@ const AdminDashboard = () => {
                                                     {u.isAdmin ? 'Administrator' : 'User'}
                                                 </span>
                                                 {user._id !== u._id && (
-                                                    <button
-                                                        onClick={() => handleDeleteUser(u)}
-                                                        className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all ml-4"
-                                                        title="Delete User"
-                                                    >
-                                                        <Trash2 size={18} />
-                                                    </button>
+                                                    <div className="flex items-center gap-2 ml-4">
+                                                        {!u.isAdmin && (
+                                                            <button
+                                                                onClick={() => handlePromoteUser(u)}
+                                                                className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-xl transition-all"
+                                                                title="Promote to Admin"
+                                                            >
+                                                                promote
+                                                            </button>
+                                                        )}
+                                                        {u.isAdmin && (
+                                                            <button
+                                                                onClick={() => handleDemoteUser(u)}
+                                                                className="p-2 text-slate-400 hover:text-primary-500 hover:bg-primary-50 rounded-xl transition-all"
+                                                                title="Demote from Admin"
+                                                            >
+                                                                demote
+                                                            </button>
+                                                        )}
+                                                        <button
+                                                            onClick={() => handleDeleteUser(u)}
+                                                            className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                                                            title="Delete User"
+                                                        >
+                                                            <Trash2 size={18} />
+                                                        </button>
+                                                    </div>
                                                 )}
                                             </div>
                                         </td>

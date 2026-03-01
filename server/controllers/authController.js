@@ -198,6 +198,32 @@ const deleteUser = async (req, res) => {
     }
 };
 
+// @desc    Promote user to admin
+// @route   PUT /api/auth/:id/role
+// @access  Private/Admin
+const promoteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Only admins can promote others
+        if (!req.user.isAdmin) {
+            return res.status(401).json({ message: 'Not authorized to promote users' });
+        }
+
+        user.isAdmin = true;
+        await user.save();
+
+        res.json({ message: 'User promoted to Administrator successfully', user });
+    } catch (error) {
+        console.error('Promote user error:', error);
+        res.status(500).json({ message: 'Server error during user promotion' });
+    }
+};
+
 // Export all functions
 module.exports = {
     registerUser,
@@ -205,4 +231,5 @@ module.exports = {
     loginUser,
     getUsers,
     deleteUser,
+    promoteUser,
 };

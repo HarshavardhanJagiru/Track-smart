@@ -19,7 +19,7 @@ const JobSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ['Applied', 'Interview', 'Offer', 'Rejected'],
+            enum: ['Yet to Apply', 'Applied', 'Interview', 'Offer', 'Rejected'],
             default: 'Applied',
         },
         location: {
@@ -37,6 +37,9 @@ const JobSchema = new mongoose.Schema(
             default: Date.now,
         },
         interviewDate: {
+            type: Date,
+        },
+        deadline: {
             type: Date,
         },
     },

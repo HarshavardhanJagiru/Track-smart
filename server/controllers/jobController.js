@@ -17,7 +17,7 @@ const getJobs = async (req, res) => {
 // @route   POST /api/jobs
 // @access  Private
 const createJob = async (req, res) => {
-    const { company, position, location, status, notes, appliedDate, interviewDate } = req.body;
+    const { company, position, location, status, notes, appliedDate, interviewDate, deadline } = req.body;
 
     try {
         if (!company || !position) {
@@ -33,6 +33,7 @@ const createJob = async (req, res) => {
             notes,
             appliedDate: appliedDate ? new Date(appliedDate) : Date.now(),
             ...(status === 'Interview' && interviewDate && { interviewDate: new Date(interviewDate) }),
+            ...(status === 'Yet to Apply' && deadline && { deadline: new Date(deadline) }),
         });
 
         // Send email notification if status is Interview
@@ -57,6 +58,31 @@ const createJob = async (req, res) => {
                 });
             } catch (err) {
                 console.error('Error sending immediate interview notification:', err);
+            }
+        }
+
+        // Send email notification if status is Yet to Apply
+        if (status === 'Yet to Apply' && req.user.email) {
+            const message = `
+                <div style="font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 10px;">
+                    <h1 style="color: #1e293b;">Job Opportunity Tracked! 📝</h1>
+                    <p>Hi ${req.user.name},</p>
+                    <p>You've successfully added a new opportunity for the <strong>${position}</strong> position at <strong>${company}</strong> to your "Yet to Apply" list.</p>
+                    ${deadline ? `<p><strong>Application Deadline:</strong> ${new Date(deadline).toLocaleDateString()}</p>` : ''}
+                    <p>Stay organized and make sure to apply before the deadline!</p>
+                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+                    <p style="font-size: 12px; color: #64748b;">This is an automated notification from your Smart Job Tracker.</p>
+                </div>
+            `;
+
+            try {
+                await sendEmail({
+                    email: req.user.email,
+                    subject: `Tracked: ${company} (Yet to Apply)`,
+                    html: message
+                });
+            } catch (err) {
+                console.error('Error sending immediate "Yet to Apply" notification:', err);
             }
         }
 
@@ -163,6 +189,7 @@ const getJobStats = async (req, res) => {
 
         const stats = {
             total: jobs.length,
+            yetToApply: jobs.filter((j) => j.status === 'Yet to Apply').length,
             applied: jobs.filter((j) => j.status === 'Applied').length,
             interview: jobs.filter((j) => j.status === 'Interview').length,
             offer: jobs.filter((j) => j.status === 'Offer').length,
