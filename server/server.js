@@ -23,25 +23,13 @@ const app = express();
 app.use(helmet());
 app.use(morgan('dev'));
 
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(cors());
 
-// Explicitly handle preflight requests
+
 
 app.use(express.json());
 
-// =======================
-// Rate Limiting
-// =======================
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100
-});
-app.use('/api/', limiter);
+
 
 // =======================
 // Routes
