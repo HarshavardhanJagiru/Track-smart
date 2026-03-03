@@ -31,10 +31,7 @@ app.use(cors({
 }));
 
 // Explicitly handle preflight requests
-app.options("*", cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true
-}));
+
 app.use(express.json());
 
 // =======================
