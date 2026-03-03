@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
 dotenv.config();
-
+console.log("CLIENT_URL:", process.env.CLIENT_URL);
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const skillRoutes = require('./routes/skillRoutes');
